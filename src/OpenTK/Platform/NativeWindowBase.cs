@@ -461,6 +461,8 @@ namespace OpenTK.Platform
         public abstract bool CursorGrabbed { get; set; }
 
         public abstract MouseCursor Cursor { get; set; }
+        
+        public virtual bool UseVirtualKeys { get; set; }
 
         public void Dispose()
         {

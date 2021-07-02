@@ -141,6 +141,12 @@ namespace OpenTK.Platform.Windows
             }
         }
 
+        public override bool UseVirtualKeys
+        {
+            get { return RawInputDriver.UseVirtualKeys; }
+            set { RawInputDriver.UseVirtualKeys = value; }
+        }
+
         protected override void Dispose(bool manual)
         {
             if (!IsDisposed)

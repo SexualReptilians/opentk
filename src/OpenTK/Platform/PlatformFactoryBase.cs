@@ -82,6 +82,8 @@ namespace OpenTK.Platform
             }
         }
 
+        public virtual bool UseVirtualKeys { get; set; }
+
         public void Dispose()
         {
             Dispose(true);

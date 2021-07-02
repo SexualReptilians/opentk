@@ -359,6 +359,34 @@ namespace OpenTK
                 implementation.Title = value;
             }
         }
+        
+        /// <summary>
+        /// Gets or sets whether to use virtual keys on Windows.
+        /// Does nothing on non-Windows systems (and also returns false).
+        /// </summary>
+        public bool UseVirtualKeys
+        {
+            get
+            {
+                if (implementation is NativeWindowBase)
+                {
+                    return ((NativeWindowBase)implementation).UseVirtualKeys;
+                }
+                return false;
+            }
+            set
+            {
+                if (implementation is NativeWindowBase)
+                {
+                    ((NativeWindowBase)implementation).UseVirtualKeys = value;
+                }
+
+                if (Factory.Default is PlatformFactoryBase)
+                {
+                    ((PlatformFactoryBase)Factory.Default).UseVirtualKeys = value;
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets a System.Boolean that indicates whether this NativeWindow is visible.

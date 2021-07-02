@@ -622,8 +622,11 @@ namespace OpenTK.Platform.Windows
             short scancode = (short)((lParam.ToInt64() >> 16) & 0xff);
             //ushort repeat_count = unchecked((ushort)((ulong)lParam.ToInt64() & 0xffffu));
             VirtualKeys vkey = (VirtualKeys)wParam;
+
             bool is_valid;
-            Key key = WinKeyMap.TranslateKey(scancode, vkey, extended0, false, out is_valid);
+            Key key = UseVirtualKeys ? 
+                WinKeyMap.TranslateVKey(scancode, vkey, extended0, out is_valid) :
+                WinKeyMap.TranslateKey(scancode, vkey, extended0, false, out is_valid);
 
             if (is_valid)
             {
