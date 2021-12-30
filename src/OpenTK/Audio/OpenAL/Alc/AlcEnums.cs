@@ -118,6 +118,12 @@ namespace OpenTK.Audio.OpenAL
         ///<summary>Expects a destination of ALC_ATTRIBUTES_SIZE, and provides an attribute list for the current context of the specified device. NULL is an invalid device.</summary>
         AllAttributes = 0x1003,
 
+        ///<summary>TODO: Followed by System.Int32 Num of requested Mono (3D) Sources</summary>
+        MonoSources = 0x1010,
+
+        ///<summary>TODO: Followed by System.Int32 Num of requested Stereo Sources</summary>
+        StereoSources = 0x1011,
+
         ///<summary>The number of capture samples available. NULL is an invalid device.</summary>
         CaptureSamples = 0x312,
 
