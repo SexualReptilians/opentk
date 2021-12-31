@@ -89,7 +89,7 @@ namespace OpenTK.Audio
         /// <param name="device">The name of the audio device to use.</param>
         /// <param name="freq">Frequency for mixing output buffer, in units of Hz. Pass 0 for driver default.</param>
         /// <param name="refresh">Refresh intervals, in units of Hz. Pass 0 for driver default.</param>
-        /// <param name="sync">Flag, indicating a synchronous context.</param>
+        /// <param name="sync">Flag, indicating a synchronous context. Default is false.</param>
         /// <remarks>
         /// Use AudioContext.AvailableDevices to obtain a list of all available audio devices.
         /// devices.
@@ -101,8 +101,8 @@ namespace OpenTK.Audio
         /// <param name="device">The device descriptor obtained through AudioContext.AvailableDevices.</param>
         /// <param name="freq">Frequency for mixing output buffer, in units of Hz. Pass 0 for driver default.</param>
         /// <param name="refresh">Refresh intervals, in units of Hz. Pass 0 for driver default.</param>
-        /// <param name="sync">Flag, indicating a synchronous context.</param>
-        /// <param name="enableEfx">Indicates whether the EFX extension should be initialized, if present.</param>
+        /// <param name="sync">Flag, indicating a synchronous context. Default is false.</param>
+        /// <param name="enableEfx">Indicates whether the EFX extension should be initialized, if present. Default is true.</param>
         /// <exception cref="ArgumentNullException">Occurs when the device string is invalid.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Occurs when a specified parameter is invalid.</exception>
         /// <exception cref="AudioDeviceException">
@@ -124,15 +124,15 @@ namespace OpenTK.Audio
         /// </remarks>
         public AudioContext(string device, int freq, int refresh, bool sync, bool enableEfx)
         {
-            CreateContext(device, freq, refresh, sync, 0, 0, enableEfx, MaxAuxiliarySends.UseDriverDefault);
+            CreateContext(device, freq, refresh, sync, -1, -1, enableEfx, MaxAuxiliarySends.UseDriverDefault);
         }
 
         /// <summary>Creates the audio context using the specified device and device parameters.</summary>
         /// <param name="device">The device descriptor obtained through AudioContext.AvailableDevices.</param>
         /// <param name="freq">Frequency for mixing output buffer, in units of Hz. Pass 0 for driver default.</param>
         /// <param name="refresh">Refresh intervals, in units of Hz. Pass 0 for driver default.</param>
-        /// <param name="sync">Flag, indicating a synchronous context.</param>
-        /// <param name="enableEfx">Indicates whether the EFX extension should be initialized, if present.</param>
+        /// <param name="sync">Flag, indicating a synchronous context. Default is false.</param>
+        /// <param name="enableEfx">Indicates whether the EFX extension should be initialized, if present. Default is true.</param>
         /// <param name="efxMaxAuxSends">Requires EFX enabled. The number of desired Auxiliary Sends per source.</param>
         /// <exception cref="ArgumentNullException">Occurs when the device string is invalid.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Occurs when a specified parameter is invalid.</exception>
@@ -155,17 +155,17 @@ namespace OpenTK.Audio
         /// </remarks>
         public AudioContext(string device, int freq, int refresh, bool sync, bool enableEfx, MaxAuxiliarySends efxMaxAuxSends)
         {
-            CreateContext(device, freq, refresh, sync, 0, 0, enableEfx, efxMaxAuxSends);
+            CreateContext(device, freq, refresh, sync, -1, -1, enableEfx, efxMaxAuxSends);
         }
 
         /// <summary>Creates the audio context using the specified device and device parameters.</summary>
         /// <param name="device">The device descriptor obtained through AudioContext.AvailableDevices.</param>
         /// <param name="freq">Frequency for mixing output buffer, in units of Hz. Pass 0 for driver default.</param>
         /// <param name="refresh">Refresh intervals, in units of Hz. Pass 0 for driver default.</param>
-        /// <param name="sync">Flag, indicating a synchronous context.</param>
-        /// <param name="mono_sources">TODO</param>
-        /// <param name="stereo_sources">TODO</param>
-        /// <param name="enableEfx">Indicates whether the EFX extension should be initialized, if present.</param>
+        /// <param name="sync">Flag, indicating a synchronous context. Default is false.</param>
+        /// <param name="monoSources">Number of mono sources. Pass -1 for driver default.</param>
+        /// <param name="stereoSources">Number of stereo sources. Pass -1 for driver default.</param>
+        /// <param name="enableEfx">Indicates whether the EFX extension should be initialized, if present. Default is true.</param>
         /// <param name="efxMaxAuxSends">Requires EFX enabled. The number of desired Auxiliary Sends per source.</param>
         /// <exception cref="ArgumentNullException">Occurs when the device string is invalid.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Occurs when a specified parameter is invalid.</exception>
@@ -186,9 +186,9 @@ namespace OpenTK.Audio
         /// Values higher than supported will be clamped by the driver.
         /// </para>
         /// </remarks>
-        public AudioContext(string device, int freq, int refresh, bool sync, int mono_sources, int stereo_sources, bool enableEfx, MaxAuxiliarySends efxMaxAuxSends)
+        public AudioContext(string device, int freq, int refresh, bool sync, int monoSources, int stereoSources, bool enableEfx, MaxAuxiliarySends efxMaxAuxSends)
         {
-            CreateContext(device, freq, refresh, sync, mono_sources, stereo_sources, enableEfx, efxMaxAuxSends);
+            CreateContext(device, freq, refresh, sync, monoSources, stereoSources, enableEfx, efxMaxAuxSends);
         }
 
         /// <summary>May be passed at context construction time to indicate the number of desired auxiliary effect slot sends per source.</summary>
@@ -211,10 +211,10 @@ namespace OpenTK.Audio
         /// <param name="device">The device descriptor obtained through AudioContext.AvailableDevices, or null for the default device.</param>
         /// <param name="freq">Frequency for mixing output buffer, in units of Hz. Pass 0 for driver default.</param>
         /// <param name="refresh">Refresh intervals, in units of Hz. Pass 0 for driver default.</param>
-        /// <param name="sync">Flag, indicating a synchronous context.</param>
-        /// <param name="mono_sources">TODO</param>
-        /// <param name="stereo_sources">TODO</param>
-        /// <param name="enableEfx">Indicates whether the EFX extension should be initialized, if present.</param>
+        /// <param name="sync">Flag, indicating a synchronous context. Default is false.</param>
+        /// <param name="monoSources">Number of mono sources. Pass -1 for driver default.</param>
+        /// <param name="stereoSources">Number of stereo sources. Pass -1 for driver default.</param>
+        /// <param name="enableEfx">Indicates whether the EFX extension should be initialized, if present. Default is true.</param>
         /// <param name="efxAuxiliarySends">Requires EFX enabled. The number of desired Auxiliary Sends per source.</param>
         /// <exception cref="ArgumentOutOfRangeException">Occurs when a specified parameter is invalid.</exception>
         /// <exception cref="AudioDeviceException">
@@ -234,7 +234,7 @@ namespace OpenTK.Audio
         /// Values higher than supported will be clamped by the driver.
         /// </para>
         /// </remarks>
-        private void CreateContext(string device, int freq, int refresh, bool sync, int mono_sources, int stereo_sources, bool enableEfx, MaxAuxiliarySends efxAuxiliarySends)
+        private void CreateContext(string device, int freq, int refresh, bool sync, int monoSources, int stereoSources, bool enableEfx, MaxAuxiliarySends efxAuxiliarySends)
         {
             if (!AudioDeviceEnumerator.IsOpenALSupported)
             {
@@ -257,14 +257,14 @@ namespace OpenTK.Audio
             {
                 throw new ArgumentOutOfRangeException("refresh", refresh, "Should be greater than zero.");
             }
-            //if (mono_sources < 0)
-            //{
-            //    throw new ArgumentOutOfRangeException("mono_sources", refresh, "Should be greater than zero.");
-            //}
-            //if (stereo_sources < 0)
-            //{
-            //    throw new ArgumentOutOfRangeException("stereo_sources", refresh, "Should be greater than zero.");
-            //}
+            if (monoSources < -1)
+            {
+                throw new ArgumentOutOfRangeException("monoSources", refresh, "Should be greater than or equal to zero.");
+            }
+            if (stereoSources < -1)
+            {
+                throw new ArgumentOutOfRangeException("stereoSources", refresh, "Should be greater than or equal to zero.");
+            }
 
             if (!String.IsNullOrEmpty(device))
             {
@@ -308,21 +308,17 @@ namespace OpenTK.Audio
             attributes.Add((int)AlcContextAttributes.Sync);
             attributes.Add(sync ? 1 : 0);
 
-            if (mono_sources != -1)
+            if (monoSources != -1)
             {
                 attributes.Add((int)AlcContextAttributes.MonoSources);
-                attributes.Add(mono_sources);
-                Console.WriteLine("MONO: {0}", mono_sources);
+                attributes.Add(monoSources);
             }
 
-            if (stereo_sources != -1)
+            if (stereoSources != -1)
             {
                 attributes.Add((int)AlcContextAttributes.StereoSources);
-                attributes.Add(stereo_sources);
-                Console.WriteLine("STEREO: {0}", stereo_sources);
+                attributes.Add(stereoSources);
             }
-
-            Console.WriteLine("HI");
 
             if (enableEfx && Alc.IsExtensionPresent(Device, "ALC_EXT_EFX"))
             {
@@ -531,7 +527,7 @@ namespace OpenTK.Audio
         }
 
         /// <summary>
-        /// TODO: SEX
+        /// Returns an integer referring to the number of mono sources.
         /// </summary>
         public int MonoSources
         {
@@ -549,9 +545,9 @@ namespace OpenTK.Audio
         }
 
         /// <summary>
-        /// TODO: SEX
+        /// Returns an integer referring to the number of stereo sources.
         /// </summary>
-        public int Stereo
+        public int StereoSources
         {
             get
             {
